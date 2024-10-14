@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字体宽度示例</title>
+    <style>
+        .narrow {
+            font-family: Arial, sans-serif;
+            font-weight: 300; /* 细字体 */
+        }
+        .normal {
+            font-family: Arial, sans-serif;
+            font-weight: 400; /* 正常字体 */
+        }
+        .bold {
+            font-family: Arial, sans-serif;
+            font-weight: 700; /* 粗字体 */
+        }
+    </style>
+</head>
+<body>
+    <h2 class="narrow">细字体</h2>
+    <h2 class="normal">正常字体</h2>
+    <h2 class="bold">粗字体</h2>
+</body>
+</html>
