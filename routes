@@ -1,0 +1,16 @@
+import winreg
+
+def read_registry_value(key_path, value_name):
+    try:
+        # 打开注册表键
+        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, key_path)
+        value, _ = winreg.QueryValueEx(key, value_name)
+        winreg.CloseKey(key)
+        return value
+    except Exception as e:
+        print(f"读取注册表值失败: {e}")
+        return None
+
+# 使用示例
+version = read_registry_value(r"Software\MyApp", "Version")
+print(f"当前版本: {version}")
