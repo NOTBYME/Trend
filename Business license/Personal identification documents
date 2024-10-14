@@ -1,1 +1,70 @@
+npm init -y
+npm install express mongoose body-parser cors
 
+// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+const port = 3000;
+
+app.use(cors());
+app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost:27017/business', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+// 定义经营证件模型
+const License = mongoose.model('License', new mongoose.Schema({
+    name: String,
+    number: String,
+    issueDate: Date,
+    expiryDate: Date,
+}));
+
+// 添加经营证件
+app.post('/licenses', async (req, res) => {
+    const license = new License(req.body);
+    await license.save();
+    res.json({ message: '经营证件已保存！' });
+});
+
+// 获取所有经营证件
+app.get('/licenses', async (req, res) => {
+    const licenses = await License.find();
+    res.json(licenses);
+});
+
+// 更新经营证件
+app.put('/licenses/:id', async (req, res) => {
+    const { id } = req.params;
+    await License.findByIdAndUpdate(id, req.body);
+    res.json({ message: '经营证件已更新！' });
+});
+
+// 删除经营证件
+app.delete('/licenses/:id', async (req, res) => {
+    const { id } = req.params;
+    await License.findByIdAndDelete(id);
+    res.json({ message: '经营证件已删除！' });
+});
+
+app.listen(port, () => {
+    console.log(`服务器在 http://localhost:${port} 运行`);
+});
+
+curl -X POST http://localhost:3000/licenses -H "Content-Type: application/json" -d '{
+    "name": "食品经营许可证",
+    "number": "123456789",
+    "issueDate": "2022-01-01",
+    "expiryDate": "2027-01-01"
+}'
+
+curl http://localhost:3000/licenses
+curl -X PUT http://localhost:3000/licenses/<license_id> -H "Content-Type: application/json" -d '{
+    "expiryDate": "2028-01-01"
+}'
