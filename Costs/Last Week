@@ -1,1 +1,54 @@
+npm init -y
+npm install express mongoose body-parser cors
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户数据统计系统</title>
+</head>
+<body>
+    <h1>客户数据统计系统</h1>
+    
+    <h2>添加客户信息</h2>
+    <form id="customerForm">
+        <input type="text" id="name" placeholder="姓名" required>
+        <input type="email" id="email" placeholder="电子邮件" required>
+        <input type="text" id="phone" placeholder="电话" required>
+        <button type="submit">提交</button>
+    </form>
 
+    <h2>客户数量</h2>
+    <div id="customerCount"></div>
+
+    <script>
+        document.getElementById('customerForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            await fetch('http://localhost:3000/customers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, phone }),
+            });
+
+            alert('客户信息已提交！');
+            document.getElementById('customerForm').reset();
+            fetchCustomerCount();
+        };
+
+        const fetchCustomerCount = async () => {
+            const response = await fetch('http://localhost:3000/customers/count');
+            const data = await response.json();
+            document.getElementById('customerCount').innerText = `当前客户数量: ${data.count}`;
+        };
+
+        // 页面加载时获取客户数量
+        window.onload = fetchCustomerCount;
+    </script>
+</body>
+</html>
