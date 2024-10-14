@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>色彩示例</title>
+    <style>
+        .red {
+            color: red; /* 字体颜色 */
+        }
+        .blue {
+            color: blue;
+        }
+        .green {
+            background-color: green; /* 背景颜色 */
+            color: white; /* 字体颜色 */
+        }
+    </style>
+</head>
+<body>
+    <h2 class="red">红色字体</h2>
+    <h2 class="blue">蓝色字体</h2>
+    <h2 class="green">绿色背景，白色字体</h2>
+</body>
+</html>
