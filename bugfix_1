@@ -1,1 +1,11 @@
+function squareNumbers(numbers) {
+    const result = [];
+    for (let i = 0; i <= numbers.length; i++) { // 错误: 使用了 <=，会导致越界
+        result.push(numbers[i] * numbers[i]);
+    }
+    return result;
+}
+
+console.log(squareNumbers([1, 2, 3])); // 输出: [1, 4, 9, undefined]
+
 
