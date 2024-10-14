@@ -1,1 +1,50 @@
+npm init -y
+npm install express mongoose body-parser cors
+// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+const port = 3000;
+
+app.use(cors());
+app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost:27017/restaurant', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+// 定义客户数据模型
+const Customer = mongoose.model('Customer', new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String,
+    visitDate: { type: Date, default: Date.now },
+}));
+
+// 添加客户数据的 API
+app.post('/customers', async (req, res) => {
+    const customer = new Customer(req.body);
+    await customer.save();
+    res.json({ message: '客户数据已保存！' });
+});
+
+// 获取客户数据的 API
+app.get('/customers', async (req, res) => {
+    const customers = await Customer.find();
+    res.json(customers);
+});
+
+// 统计客户数量的 API
+app.get('/customers/count', async (req, res) => {
+    const count = await Customer.countDocuments();
+    res.json({ count });
+});
+
+app.listen(port, () => {
+    console.log(`服务器在 http://localhost:${port} 运行`);
+});
 
