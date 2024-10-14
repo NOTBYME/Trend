@@ -1,1 +1,9 @@
+def get_user_age(user_data, username):
+    return user_data[username]['age']  # 如果 username 不存在，会抛出 KeyError
 
+users = {
+    'alice': {'age': 30},
+    'bob': {'age': 25}
+}
+
+print(get_user_age(users, 'charlie'))  
