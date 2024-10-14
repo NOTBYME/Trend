@@ -1,0 +1,29 @@
+body {
+    background-color: #f0f0f0; /* 设置背景色 */
+    color: #333; /* 设置字体颜色 */
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #ff6347; /* 番茄红 */
+}
+
+p {
+    color: #555; /* 深灰色 */
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外部颜色导入示例</title>
+    <link rel="stylesheet" href="styles.css"> <!-- 引用外部 CSS 文件 -->
+</head>
+<body>
+
+    <h1>欢迎来到我的网站</h1>
+    <p>这是一个使用外部颜色导入的示例。</p>
+
+</body>
+</html>
