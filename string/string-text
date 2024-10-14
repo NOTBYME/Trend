@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>材质示例</title>
+    <style>
+        .textured {
+            font-size: 36px;
+            color: #fff;
+            background: linear-gradient(45deg, #6e7dff, #a5c9ff);
+            padding: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="textured">渐变材质效果</div>
+</body>
+</html>
