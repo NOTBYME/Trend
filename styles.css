@@ -1,0 +1,13 @@
+import winreg
+
+def create_registry_key(key_path):
+    try:
+        # 创建或打开注册表键
+        key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, key_path)
+        winreg.CloseKey(key)
+        print(f"注册表键 '{key_path}' 创建成功。")
+    except Exception as e:
+        print(f"创建注册表键失败: {e}")
+
+# 使用示例
+create_registry_key(r"Software\MyApp")
