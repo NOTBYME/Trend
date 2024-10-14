@@ -1,1 +1,138 @@
+npm init -y
+npm install express mongoose body-parser cors
 
+// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+const port = 3000;
+
+app.use(cors());
+app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost:27017/restaurant', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+// 定义菜单项模型
+const MenuItem = mongoose.model('MenuItem', new mongoose.Schema({
+    name: String,
+    price: Number,
+}));
+
+// 定义订单模型
+const Order = mongoose.model('Order', new mongoose.Schema({
+    items: [{ name: String, price: Number }],
+    total: Number,
+    createdAt: { type: Date, default: Date.now },
+}));
+
+// 添加菜单项的 API
+app.post('/menu', async (req, res) => {
+    const menuItem = new MenuItem(req.body);
+    await menuItem.save();
+    res.json({ message: '菜单项已添加！' });
+});
+
+// 获取菜单项的 API
+app.get('/menu', async (req, res) => {
+    const menuItems = await MenuItem.find();
+    res.json(menuItems);
+});
+
+// 创建订单的 API
+app.post('/order', async (req, res) => {
+    const order = new Order(req.body);
+    await order.save();
+    res.json({ message: '订单已创建！' });
+});
+
+// 获取所有订单的 API
+app.get('/orders', async (req, res) => {
+    const orders = await Order.find();
+    res.json(orders);
+});
+
+app.listen(port, () => {
+    console.log(`服务器在 http://localhost:${port} 运行`);
+});
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自助点餐系统</title>
+</head>
+<body>
+    <h1>自助点餐系统</h1>
+    
+    <h2>菜单</h2>
+    <div id="menu"></div>
+
+    <h2>购物车</h2>
+    <ul id="cart"></ul>
+    <strong>总计: ￥<span id="total">0</span></strong>
+    <button id="checkout">结账</button>
+
+    <script>
+        const cart = [];
+        let total = 0;
+
+        async function fetchMenu() {
+            const response = await fetch('http://localhost:3000/menu');
+            const menu = await response.json();
+            renderMenu(menu);
+        }
+
+        function renderMenu(menu) {
+            const menuDiv = document.getElementById('menu');
+            menu.forEach(item => {
+                const button = document.createElement('button');
+                button.innerText = `${item.name} - ￥${item.price}`;
+                button.onclick = () => addToCart(item);
+                menuDiv.appendChild(button);
+            });
+        }
+
+        function addToCart(item) {
+            cart.push(item);
+            total += item.price;
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartUl = document.getElementById('cart');
+            cartUl.innerHTML = '';
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = `${item.name} - ￥${item.price}`;
+                cartUl.appendChild(li);
+            });
+            document.getElementById('total').innerText = total;
+        }
+
+        document.getElementById('checkout').onclick = async () => {
+            const order = { items: cart, total: total };
+            await fetch('http://localhost:3000/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(order),
+            });
+            alert('订单已提交！');
+            cart.length = 0; // 清空购物车
+            total = 0; // 重置总计
+            renderCart(); // 更新购物车显示
+        };
+
+        // 页面加载时获取菜单
+        window.onload = fetchMenu;
+    </script>
+</body>
+</html>
