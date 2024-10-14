@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出演人员</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .cast-container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6347; /* 番茄红 */
+        }
+        .cast-member {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+        .cast-member:last-child {
+            border-bottom: none;
+        }
+        .name {
+            font-size: 1.5em;
+            color: #333;
+        }
+        .role {
+            font-style: italic;
+            color: #555;
+        }
+        .bio {
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cast-container">
+        <h1>出演人员</h1>
+        
+        <div class="cast-member">
+            <div class="name">张三</div>
+            <div class="role">主演</div>
+            <div class="bio">张三是一位经验丰富的演员，以其生动的表演而闻名。</div>
+        </div>
+
+        <div class="cast-member">
+            <div class="name">李四</div>
+            <div class="role">配角</div>
+            <div class="bio">李四擅长多种不同的角色，能够轻松转变风格。</div>
+        </div>
+
+        <div class="cast-member">
+            <div class="name">王五</div>
+            <div class="role">客串</div>
+            <div class="bio">王五是一位新兴演员，凭借其魅力赢得了观众的喜爱。</div>
+        </div>
+
+        <div class="cast-member">
+            <div class="name">赵六</div>
+            <div class="role">制片人</div>
+            <div class="bio">赵六在影视行业有着丰富的制作经验，负责多个成功项目。</div>
+        </div>
+    </div>
+
+</body>
+</html>
